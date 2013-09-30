@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Legend of Scala</title>
+    <script src="highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad()</script>
+    <link href='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/xcode.css' rel='stylesheet'>
+    <link href='http://fonts.googleapis.com/css?family=Press+Start+2P|Aldrich|PT+Mono' rel='stylesheet'>
+    <style>
+    body {
+        background: #3858c8;
+        color: black;
+        font: 12pt/20pt "Aldrich", sans-serif;
+
+        width: 940px;
+        margin: 0 auto;
+    }
+
+    header, footer {
+        text-align: center;
+        padding: 20px;
+    }
+
+    footer {
+        color: rgba(0, 0, 0, 0.25);
+    }
+
+    #main {
+        background: white;
+        padding: 20px 40px;
+        box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+
+        text-align: left;
+    }
+
+    h1 {
+        font-family: "Press Start 2P", sans-serif;
+        color: #f8b020;
+        text-shadow: 4px 4px 0 rgba(0, 0, 0, 1.0);
+    }
+
+    code {
+        font-family: "PT Mono", monospace;
+    }
+
+    pre {
+        padding-left: 40px;
+        margin: 0;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.png" title="The Legend of Scala" alt="The Legend of Scala">
+    </header>
+    <section id="main">
+        <p>Welcome, adventurer, to the <strong>Legend of Scala</strong>, an
+           interactive "edutainment" experience!</p>
+
+        <h1 id="awakening">A Rude Awakening</h1>
+        <p>You wake up and you're not quite sure where you are. Maybe you
+           should try looking around?</p>
+
+        <pre><code class="scala">me.look</code></pre>
+
+        <p>Yikes! You're in a room with an <strong>ogre</strong>! He doesn't
+           look too strong though, and you might be able to take him down if
+           you had a weapon of some sort...</p>
+
+        <p>Hm, there's a chest in here too... what if you looked in there?</p>
+
+        <pre><code class="scala">me.look.features
+me.look.features(0)
+me.look.features(0).examine
+me.look.features(0).use</code></pre>
+
+        <p>Hey, now you have a <strong>stick</strong> and a
+           <strong>plank</strong>. You could fashion a sword out of it! But
+           first you need a recipe...</p>
+
+        <pre><code class="scala">case class SwordMold(hilt : Item, blade : Item)</code></pre>
+
+        <p>Now we can combine our stick and plank together!</p>
+
+        <pre><code class="scala">me.inventory
+val stick = me.inventory(0)
+val plank = me.inventory(1)
+
+var weapon = me.combine(new SwordMold(stick, plank))</code></pre>
+
+        <p>And now you can <strong>defeat</strong> the ogre!</p>
+
+        <pre><code class="scala">weapon.use(me.look.monsters(0))</code></pre>
+
+        <h1 id="exploring">Exploring the Dungeon</h1>
+
+        <p>Now the ogre is dead, you can move around the dungeon.</p>
+
+        <pre><code class="scala">me.look</code></pre>
+
+        <p>Hey, you can move around now! Why don't you try moving in that
+           direction?</p>
+
+        <pre><code class="scala">me.move("north")</code></pre>
+
+        <p>Hm, there seems to be more to this dungeon. Try getting to the
+           end!</p>
+
+        <h1 id="kobold">The Big Bad Wolf</h1>
+
+        <p>Looks like the ogre wasn't the only monster in this dungeon. This
+           <strong>kobold</strong> is blocking your way! Apparently he's
+           weak to <strong>maces</strong>, so your sword won't do! Good thing
+           we can pull our sword apart and fashion a mace out of it.</p>
+
+        <pre><code class="scala">val List(stick, plank) = weapon.separate
+case class MaceMold(handle : Item, head : Item)
+weapon = me.combine(new MaceMold(stick, plank))</code></pre>
+
+        <p>Now <strong>take down that kobold</strong>!</p>
+
+        <pre><code class="scala">weapon.use(me.look.monsters(0))
+weapon.use(me.look.monsters(0))</code></pre>
+
+        <p>It looks like he dropped some stuff.</p>
+
+        <pre><code class="scala">me.inventory</code></pre>
+
+        <p>Those things don't look too helpful to you in this cave. Why don't
+           we try get out of this place first?</p>
+
+        <h1 id="world">Welcome to the Wild Wild World</h1>
+
+        <p>There's a portal here. There's nowhere else to go, so you might
+           as well take the plunge.</p>
+
+        <pre><code class="scala">me.look.features(0).use</code></pre>
+
+        <p>Maybe that <strong>map</strong> you found in the cave is going to
+           come in handy? You're a little tired of having to rummage through
+           your inventory and count which item you want to use, so why don't
+           you automate it?</p>
+
+        <pre><code class="scala">def retrieve(name : String) =
+    me.inventory.find(_.name == name)
+</code></pre>
+
+        <p>Now you can grab the map out of your inventory easily.</p>
+
+        <pre><code class="scala">val map = retrieve("map")</code></pre>
+
+        <p>Huh, it seems to be wrapped in an
+           <code class="scala">Option[Item]</code>. What happens if we try to
+           retrieve something we don't have?</p>
+
+        <pre><code class="scala">retrieve("cat")</code></pre>
+
+        <p>It gives us back <code class="scala">None</code>. That's cool, but
+           how do we get the item out?</p>
+
+        <pre><code class="scala">val map = retrieve("map").head</code></pre>
+
+        <p>Alright, let's try using the map now.</p>
+
+        <pre><code class="scala">map.use
+map.use[List[Tile]]</code></pre>
+
+        <p>Hm, there seems to be a lot of tiles in here, but they're not really
+           indicative of anything. We have a <strong>legend</strong>,
+           though.</p>
+
+        <pre><code class="scala">val legend = retrieve("legend").head</code></pre>
+
+        <p>Let's try using it with our map.</p>
+
+        <pre><code class="scala">legend.use(map)
+legend.use[String](map)
+
+val tiles = map.use[List[Tile]].head
+legend.use[String](tiles(0))</code></pre>
+
+        <p>Hey, we have a tile image! What if we projected the legend over the
+           entire map?</p>
+
+        <pre><code class="scala">tiles.length</code></pre>
+
+        <p>There are a lot of tiles on the map... Maybe we could just show the
+           map for the tiles around us.</p>
+
+        <pre><code class="scala">def aroundMe(r : Int)(t : Tile) =
+    t.pos.x >= me.pos.x - r && t.pos.x <= me.pos.x + r &&
+    t.pos.y >= me.pos.y - r && t.pos.y <= me.pos.y + r
+</code></pre>
+
+        <p>Now let's try showing the map for only the tiles around you.</p>
+
+        <pre><code class="scala">def showMap {
+    println(tiles.filter(aroundMe(25)).map(legend.use[String](_).head))
+}
+
+showMap</code></pre>
+
+        <p>That doesn't quite work...</p>
+
+        <pre><code class="scala">def showMap {
+    var lastY = 0
+
+    println(tiles.filter(aroundMe(25)).map(tile => {
+        var s = legend.use[String](tile).head
+        if (tile.pos.y != lastY) {
+            s = "\n" + s
+        }
+        lastY = tile.pos.y
+        s
+    }).mkString)
+}
+
+showMap</code></pre>
+
+        <p>Fantastic! But what if we wanted to see ourselves?</p>
+
+        <pre><code class="scala">def showTile(tile : Tile) = tile.pos match {
+    case pos if pos == me.pos => Markers.Me
+    case _ => legend.use[String](tile).head
+}
+
+def showMap {
+    var lastY = 0
+
+    println(tiles.filter(aroundMe(25)).map(tile => {
+        var s = showTile(tile)
+        if (tile.pos.y != lastY) {
+            s = "\n" + s
+        }
+        lastY = tile.pos.y
+        s
+    }).mkString)
+}
+
+showMap</code></pre>
+
+        <h1 id="friend">Finding a Friend</h1>
+
+        <p>Now that we can see ourselves, let's use the beacon to find a
+           friend.</p>
+
+        <pre><code class="scala">val beacon = retrieve("beacon").head
+beacon.use
+beacon.use[List[Signal]]</code></pre>
+
+        <p>Alright, now we can use the signal to find a friend. Why don't you
+           try locating the person next to you?</p>
+
+        <pre><code class="scala">def target = {
+    beacon.use[List[Signal]].find(_.name == /* name */)
+}
+
+def showTile(tile : Tile) = tile.pos match {
+    case pos if pos == me.pos => Markers.Me
+    case pos if pos == target.pos -> Markers.Target
+    case _ => legend.use[String](tile).head
+}
+
+def showMap {
+    var lastY = 0
+
+    println(tiles.filter(aroundMe(25)).map(tile => {
+        var s = showTile(tile)
+        if (tile.pos.y != lastY) {
+            s = "\n" + s
+        }
+        lastY = tile.pos.y
+        s
+    }).mkString)
+}
+
+showMap</code></pre>
+
+        <p>If you ever run across an <strong>elf</strong>, you can use your
+           <strong>spear</strong>!</p>
+
+        <pre><code class="scala">case class SpearMold(pole : Item, tip : Item)</code></pre>
+
+        <h1 id="endgame">Winning</h1>
+
+        <p>Find the four elemental gems and the dragon's den in the
+           snowfields, and defeat the dragon with the ancient staff.</p>
+
+        <pre><code class="scala">case class AncientStaffMold(shaft : Item, fireGem : Item, waterGem : Item,
+                                          earthGem : Item, airGem : Item)</code></pre>
+
+         <p>Try writing functions to automate the game. Maybe something to
+            battle monsters automatically? Or a way to navigate through
+            dungeons?</p>
+    </section>
+    <footer>
+    hey, don't steal and stuff
+    </footer>
+</body>
+</html>
