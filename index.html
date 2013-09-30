@@ -117,7 +117,7 @@ var weapon = me.inventory(0)</code></pre>
 
         <pre><code class="scala">val List(stick, plank) = weapon.separate
 case class MaceMold(handle : Item, head : Item)
-weapon = me.combine(new MaceMold(stick, plank))</code></pre>
+weapon = me.combine(new MaceMold(stick, plank)).head</code></pre>
 
         <p>Now <strong>take down that kobold</strong>!</p>
 
