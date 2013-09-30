@@ -254,7 +254,7 @@ beacon.use[List[Signal]]</code></pre>
            try locating the person next to you?</p>
 
         <pre><code class="scala">def target = {
-    beacon.use[List[Signal]].head.find(_.name == /* name */)
+    beacon.use[List[Signal]].head.find(_.name == "name").head
 }
 
 def showTile(tile : Tile) = tile.pos match {
