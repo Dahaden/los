@@ -257,7 +257,7 @@ beacon.use[List[Signal]]</code></pre>
     beacon.use[List[Signal]].head.find(_.name == "name").head
 }
 
-def showTile(tile : Tile) = tile.pos match {
+def showTile(tile : Tile, target : Signal) = tile.pos match {
     case pos if pos == me.pos => Markers.Me
     case pos if pos == target.pos => Markers.Target
     case _ => legend.use[String](tile).head
@@ -265,9 +265,10 @@ def showTile(tile : Tile) = tile.pos match {
 
 def showMap {
     var lastY = 0
+    var t = target
 
     println(tiles.filter(aroundMe(25)).map(tile => {
-        var s = showTile(tile)
+        var s = showTile(tile, t)
         if (tile.pos.y != lastY) {
             s = "\n" + s
         }
