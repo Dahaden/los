@@ -72,7 +72,9 @@
         <pre><code class="scala">me.look.features
 me.look.features(0)
 me.look.features(0).examine
-me.look.features(0).use</code></pre>
+me.look.features(0).use
+
+me.inventory</code></pre>
 
         <p>Hey, now you have a <strong>stick</strong> and a
            <strong>plank</strong>. You could fashion a sword out of it! But
@@ -82,11 +84,11 @@ me.look.features(0).use</code></pre>
 
         <p>Now we can combine our stick and plank together!</p>
 
-        <pre><code class="scala">me.inventory
-val stick = me.inventory(0)
+        <pre><code class="scala">val stick = me.inventory(0)
 val plank = me.inventory(1)
 
-var weapon = me.combine(new SwordMold(stick, plank))</code></pre>
+me.combine(new SwordMold(stick, plank))
+var weapon = me.inventory(0)</code></pre>
 
         <p>And now you can <strong>defeat</strong> the ogre!</p>
 
