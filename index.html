@@ -259,7 +259,7 @@ beacon.use[List[Signal]]</code></pre>
 
 def showTile(tile : Tile) = tile.pos match {
     case pos if pos == me.pos => Markers.Me
-    case pos if pos == target.pos -> Markers.Target
+    case pos if pos == target.pos => Markers.Target
     case _ => legend.use[String](tile).head
 }
 
